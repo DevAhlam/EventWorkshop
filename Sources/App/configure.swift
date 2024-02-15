@@ -7,5 +7,6 @@ public func configure(_ app: Application) async throws {
 
     // register routes
     try app.register(collection: EventController())
+    try app.register(collection: Eventprovider())
     try routes(app)
 }
