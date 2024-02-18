@@ -5,14 +5,25 @@
 //  Created by Rahaf ALghuraibi on 08/08/1445 AH.
 //
 
-import SwiftUI
+import Foundation
+import Fluent
+import FluentPostgresDriver
 
-struct SwiftUIView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct CreateParticipant: Migration {
+    
+    func prepare(on database: Database) -> EventLoopFuture<Void> {
+        database.schema("participant")
+        .id()
+        .field("FirstName", .string)
+        .field("LastName", .string)
+        .field("Email", .string)
+        .create()
     }
-}
-
-#Preview {
-    SwiftUIView()
+    
+    // undo
+    func revert(on database: Database) -> EventLoopFuture<Void> {
+        database.schema("planets").delete()
+    }
+    
+    
 }

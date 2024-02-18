@@ -8,8 +8,10 @@ public func configure(_ app: Application) async throws {
     // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
     app.databases.use(.postgres(configuration: SQLPostgresConfiguration(hostname: "localhost",  username: "postgres", password:"", database: "eventdb" ,tls: .prefer(try .init(configuration: .clientDefault)))), as: .psql)
     // register routes
+    app.migrations.add(CreateParticipant())
     
     try app.register(collection: EventController())
     try app.register(collection: Eventprovider())
+    try app.register(collection: Participant())
     try routes(app)
 }

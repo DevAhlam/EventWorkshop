@@ -4,15 +4,31 @@
 //
 //  Created by Rahaf ALghuraibi on 08/08/1445 AH.
 //
+ 
+import Foundation
+import Fluent
+import Vapor
 
-import SwiftUI
-
-struct SwiftUIView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+final class Planet: Model, Content {
+    
+    static let schema = "participant"
+    
+    @ID(key: .id)
+    var id: UUID?
+    
+    @Field(key: "FirstName")
+    var FirstName: String
+    @Field(key: "LastName")
+    var LastName: String
+    @Field(key: "Email")
+    var Email: String
+    init() {}
+    
+    init(id: UUID? = nil, name: String) {
+        self.id = id
+        self.FirstName = FirstName
+        self.LastName = LastName
+        self.Email = Email
     }
-}
-
-#Preview {
-    SwiftUIView()
+    
 }
