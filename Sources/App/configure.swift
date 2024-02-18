@@ -9,7 +9,7 @@ public func configure(_ app: Application) async throws {
     app.databases.use(.postgres(configuration: SQLPostgresConfiguration(hostname: "localhost",  username: "postgres", password:"", database: "eventdb" ,tls: .prefer(try .init(configuration: .clientDefault)))), as: .psql)
     // register routes
     app.migrations.add(CreateParticipant())
-    
+    app.migrations.add(CreateEvent())
     try app.register(collection: EventController())
     try app.register(collection: Eventprovider())
     try app.register(collection: Participant())

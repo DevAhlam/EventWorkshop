@@ -22,7 +22,7 @@ struct CreateParticipant: Migration {
     
     // undo
     func revert(on database: Database) -> EventLoopFuture<Void> {
-        database.schema("planets").delete()
+        database.schema("participant").delete()
     }
     
     
