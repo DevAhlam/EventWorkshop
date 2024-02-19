@@ -10,6 +10,7 @@ public func configure(_ app: Application) async throws {
     // register routes
     app.migrations.add(CreateParticipant())
     app.migrations.add(CreateEvent())
+    app.migrations.add(CreateEventProvider())
     try app.register(collection: EventController())
     try app.register(collection: Eventprovider())
     try app.register(collection: Participant())
