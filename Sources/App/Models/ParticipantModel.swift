@@ -24,7 +24,7 @@ final class Planet: Model, Content {
     var Email: String
     init() {}
     
-    init(id: UUID? = nil, name: String) {
+    init(id: UUID? = nil, FirstName: String , LastName : String, Email : String ) {
         self.id = id
         self.FirstName = FirstName
         self.LastName = LastName
