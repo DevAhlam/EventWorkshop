@@ -27,17 +27,21 @@ final class Event: Model, Content{
     @Field (key: "eventtime")
     var eventtime : String
     
-    @Field (key: "providerID")
-    var providerID : String
+
+    @Parent(key: "providerID")
+        var provider: EventProvider
+    
+    @Siblings(through: EventParticipant.self, from: \.$event, to: \.$provider)
+        public var providers: [EventProvider]
     
     init() {}
-    init (id : UUID? = nil , name : String, eventdescription : String, eventdate: String, eventtime: String, providerID: String){
+    init (id : UUID? = nil , name : String, eventdescription : String, eventdate: String, eventtime: String, providerID: EventProvider.IDValue){
         self.id = id
         self.name = name
         self.eventdescription = eventdescription
         self.eventdate = eventdate
         self.eventtime = eventtime
-        self.providerID = providerID
+        self.$provider.id = providerID
         
     }
 }

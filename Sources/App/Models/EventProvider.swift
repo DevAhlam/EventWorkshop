@@ -22,6 +22,13 @@ final class EventProvider : Model , Content {
     @Field(key: "email")
     var email : String
     
+    @Children(for: \.$provider)
+        var events: [Event]
+    
+    @Siblings(through: EventParticipant.self, from: \.$provider, to: \.$event)
+        public var eventsP: [Event]
+    
+    
     init(){}
     
     init(id: UUID? = nil , name: String , email : String ){
