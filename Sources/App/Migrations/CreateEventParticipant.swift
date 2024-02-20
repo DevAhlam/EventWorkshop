@@ -15,8 +15,8 @@ struct CreateEventParticipant: Migration {
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema("events")
         .id()
-        .field("event_id", .uuid, .references("providerID", "id"))
-        .field("provider_id", .uuid, .references("providerID", "id"))
+        .field("event_id", .uuid, .references("eventID", "id"))
+        .field("participant-id", .uuid, .references("participantID", "id"))
         .create()
     }
     

@@ -31,8 +31,8 @@ final class Event: Model, Content{
     @Parent(key: "providerID")
         var provider: EventProvider
     
-    @Siblings(through: EventParticipant.self, from: \.$event, to: \.$provider)
-        public var providers: [EventProvider]
+    @Siblings(through: EventParticipant.self, from: \.$event, to: \.$participant)
+        public var participants: [ParticipantModel]
     
     init() {}
     init (id : UUID? = nil , name : String, eventdescription : String, eventdate: String, eventtime: String, providerID: EventProvider.IDValue){

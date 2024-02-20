@@ -25,8 +25,7 @@ final class EventProvider : Model , Content {
     @Children(for: \.$provider)
         var events: [Event]
     
-    @Siblings(through: EventParticipant.self, from: \.$provider, to: \.$event)
-        public var eventsP: [Event]
+    
     
     
     init(){}

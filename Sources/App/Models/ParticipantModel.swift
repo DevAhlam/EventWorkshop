@@ -9,7 +9,7 @@ import Foundation
 import Fluent
 import Vapor
 
-final class Planet: Model, Content {
+final class ParticipantModel: Model, Content {
     
     static let schema = "participant"
     
@@ -22,6 +22,13 @@ final class Planet: Model, Content {
     var LastName: String
     @Field(key: "Email")
     var Email: String
+    
+//    @Parent(key: "event_id")
+//        var event: Event
+    
+    @Siblings(through: EventParticipant.self, from: \.$participant, to: \.$event)
+        public var eventsP: [Event]
+    
     init() {}
     
     init(id: UUID? = nil, FirstName: String , LastName : String, Email : String ) {

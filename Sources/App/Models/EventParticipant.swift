@@ -21,17 +21,17 @@ final class EventParticipant: Model {
     @Parent(key: "event_id")
     var event: Event
 
-    @Parent(key: "provider_id")
-    var provider: EventProvider
+    @Parent(key: "participant_id")
+        var participant: ParticipantModel
 
     
 
     init() { }
 
-    init(id: UUID? = nil, event: Event, provider: EventProvider) throws {
+    init(id: UUID? = nil, event: Event, participant: ParticipantModel) throws {
         self.id = id
         self.$event.id = try event.requireID()
-        self.$provider.id = try provider.requireID()
+        self.$participant.id = try participant.requireID()
         
     }
 }
