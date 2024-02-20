@@ -19,7 +19,7 @@ struct CreateEvent: Migration {
         .field("EventDate", .string)
         .field("Eventtime", .string)
         //.field("ProviderID", .string)
-        .field("providerID", .uuid, .references("providerID", "id"))
+        .field("providerID", .uuid, .references("EventProvider", "id"))
         .create()
     }
     

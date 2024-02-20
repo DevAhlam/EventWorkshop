@@ -13,10 +13,10 @@ import FluentPostgresDriver
 struct CreateEventParticipant: Migration {
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
-        database.schema("events")
+        database.schema("eventparticipants")
         .id()
-        .field("event_id", .uuid, .references("eventID", "id"))
-        .field("participant-id", .uuid, .references("participantID", "id"))
+        .field("event_id", .uuid, .references("events", "id"))
+        .field("participant-id", .uuid, .references("participant", "id"))
         .create()
     }
     
