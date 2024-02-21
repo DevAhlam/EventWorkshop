@@ -12,26 +12,57 @@ struct EventController : RouteCollection {
     func boot(routes: Vapor.RoutesBuilder) throws {
         let events = routes.grouped("events")
         events.get(use: index)
-        events.post(use : create)
-        events.put(":id" , use : update)
-        events.delete(":id" , use : delete)
+        events.post("addNewEvent", ":providerID" , use : create)
+//        events.put(":id" , use : update)
+//        events.delete(":id" , use : delete)
+        events.group(":id") { event in
+            event.get(use: show)
+            event.put(use: update)
+            event.delete(use: delete)
+                }
         
     }
     
-    func index (req : Request) async throws -> String{
-        return "Get all events"
-    }
-    func create (req : Request) async throws -> String{
-        return "Create all plants"
-    }
+    func index(req: Request) async throws -> [Event] {
+            try await Event.query(on: req.db).all()
+        }
     
-    func update (req : Request) async throws -> String{
-        let id = req.parameters.get("id")!
-        return "Update all plants with \(id)"
-    }
-    func delete (req : Request) async throws -> String{
-        let id = req.parameters.get("id")!
-        return "Delete all plants with \(id)"
-    }
+    func create(req: Request) async throws -> Event {
+            let event = try req.content.decode(Event.self)
+        
+        
+        guard let eventprovider = try await EventProvider.find(req.parameters.get("providerID"), on: req.db) else {
+            throw Abort(.notFound)
+        }
+            try await event.save(on: req.db)
+            return event
+        }
+    
+    
+    func show(req: Request) async throws -> Event {
+           guard let event = try await Event.find(req.parameters.get("id"), on: req.db) else {
+               throw Abort(.notFound)
+           }
+           return event
+       }
+    
+    func update(req: Request) async throws -> Event {
+           guard let event = try await Event.find(req.parameters.get("id"), on: req.db) else {
+               throw Abort(.notFound)
+           }
+           let updatedEvent = try req.content.decode(Event.self)
+           event.name = updatedEvent.name
+           try await event.save(on: req.db)
+           return event
+       }
+    
+    func delete(req: Request) async throws -> HTTPStatus {
+            guard let event = try await Event.find(req.parameters.get("id"), on: req.db) else {
+                throw Abort(.notFound)
+            }
+            try await event.delete(on: req.db)
+            return .ok
+        }
     
 }
+

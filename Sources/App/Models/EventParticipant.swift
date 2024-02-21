@@ -12,7 +12,7 @@ import Fluent
 
 
 // Example of a pivot model.
-final class EventParticipant: Model {
+final class EventParticipant: Model, Content {
     static let schema = "eventparticipants"
 
     @ID(key: .id)
