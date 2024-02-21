@@ -18,20 +18,26 @@ struct Participant : RouteCollection {
         
     }
     
-    func index (req : Request) async throws -> String{
-        return "Get  Participant"
+    
+    func index(req: Request) async throws -> [ParticipantModel] {
+        try await ParticipantModel.query(on: req.db).all()
     }
-    func create (req : Request) async throws -> String{
-        return "Create  Participant"
+    func create(req: Request) async throws -> ParticipantModel {
+        let participant = try req.content.decode(ParticipantModel.self)
+        try await participant.save(on: req.db)
+        return participant
     }
     // اعتقد مافي داعي للتحدييث
 //    func update (req : Request) async throws -> String{
 //        let id = req.parameters.get("id")!
 //        return "Update all plants with \(id)"
 //    }
-    func delete (req : Request) async throws -> String{
-        let id = req.parameters.get("id")!
-        return "Delete all event with \(id)" //فكرت انو يحذف كل الوركشوبز اللي مسجل فيها
-    }
+    func delete(req: Request) async throws -> HTTPStatus {
+          guard let participant = try await ParticipantModel.find(req.parameters.get("id"), on: req.db) else {
+              throw Abort(.notFound)
+          }
+          try await participant.delete(on: req.db)
+          return .ok
+      }
     
 }
