@@ -10,7 +10,7 @@ import Vapor
 
 
 
-struct EventproviderController : RouteCollection {
+struct Eventprovider : RouteCollection {
     
     func boot(routes: Vapor.RoutesBuilder) throws {
         
