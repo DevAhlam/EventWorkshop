@@ -15,23 +15,23 @@ struct EventproviderController : RouteCollection {
     func boot(routes: Vapor.RoutesBuilder) throws {
         
         
-        let Eventprovider = routes.grouped("Eventprovider")
+        let Eventproviders = routes.grouped("Eventprovider")
         
         
-        Eventprovider.get(use : showEvent) // all name and email
-        Eventprovider.post(use : CreateNewEvent) // create new Eventprovider
-        Eventprovider.delete(":id" , use : delete)
+        Eventproviders.get(use : showEvent) // all name and email
+        Eventproviders.post(use : CreateNewEvent) // create new Eventprovider
+        Eventproviders.delete(":id" , use : delete)
         
         
-        
+    }
         func showEvent(req: Request) async throws -> [EventProvider] {
             try await EventProvider.query(on: req.db).all()
         }
         
         func CreateNewEvent(req: Request) async throws -> EventProvider {
-            let EventProvider = try req.content.decode(EventProvider.self)
-            try await EventProvider.save(on: req.db)
-            return EventProvider
+            let eventprovider = try req.content.decode(EventProvider.self)
+            try await eventprovider.save(on: req.db)
+            return eventprovider
         }
         
         
@@ -43,7 +43,7 @@ struct EventproviderController : RouteCollection {
             try await EventProvider.delete(on: req.db)
             return .ok
         }
-    }
+    
 }
     
     
