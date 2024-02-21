@@ -13,7 +13,7 @@ struct Participant : RouteCollection {
         let Participant = routes.grouped("Participant")
         Participant.get(use: index)
         Participant.post(use : create)
-      //  Participant.put(":id" , use : update)
+      //Participant.put(":id" , use : update)
         Participant.delete(":id" , use : delete)
         
     }
