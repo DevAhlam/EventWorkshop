@@ -12,7 +12,7 @@ struct EventController : RouteCollection {
     func boot(routes: Vapor.RoutesBuilder) throws {
         let events = routes.grouped("events")
         events.get(use: index)
-        events.post("addNewEvent", ":providerID" , use : create)
+        events.post( use : create)
 //        events.put(":id" , use : update)
 //        events.delete(":id" , use : delete)
         events.group(":id") { event in
