@@ -29,11 +29,7 @@ struct EventController : RouteCollection {
     
     func create(req: Request) async throws -> Event {
             let event = try req.content.decode(Event.self)
-        
-        
-        guard let eventprovider = try await EventProvider.find(req.parameters.get("providerID"), on: req.db) else {
-            throw Abort(.notFound)
-        }
+
             try await event.save(on: req.db)
             return event
         }
